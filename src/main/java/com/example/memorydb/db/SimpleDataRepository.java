@@ -14,7 +14,7 @@ abstract public class SimpleDataRepository<T extends Entity, ID extends Long> im
         public int compare(T o1, T o2) {
             return Long.compare(o1.getId(), o2.getId());
         }
-    }
+    };
 
     //create //update
     @Override
@@ -33,13 +33,14 @@ abstract public class SimpleDataRepository<T extends Entity, ID extends Long> im
 
         if(prevData.isPresent()){
             //기존 데이터가 있는 경우 업데이트
-            dataList.remove(prevData);
+            //Optional<UserEntity>
+            dataList.remove(prevData.get());
             dataList.add(data);
         }else{
             //없는 경우
             index++;
             data.setId(index);
-            dataList.add(data)
+            dataList.add(data);
         }
 
         return data;
@@ -75,7 +76,7 @@ abstract public class SimpleDataRepository<T extends Entity, ID extends Long> im
                 .findFirst();
 
         if (deleteEntity.isPresent()){
-            dataList.remove(deleteEntity);
+            dataList.remove(deleteEntity.get());
         }
     }
 }
